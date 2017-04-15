@@ -4,6 +4,9 @@ import java.awt.event.*;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * Provides a main graphical user interface for the client.
+ */
 public class HumanClientGUI extends JFrame {
 
     private static final long serialVersionUID = 8448144773615962056L;
