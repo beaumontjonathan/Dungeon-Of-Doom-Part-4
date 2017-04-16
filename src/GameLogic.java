@@ -17,23 +17,23 @@ public class GameLogic{
 	private DoDServerController controller;
     private final static HashMap<String, String> PLAYER_EXIT_MESSAGES = new HashMap<String, String>() {
         private static final long serialVersionUID = -5824983597569224316L;
-
         {
-        put("WON", "Congratulations!!! \n You have escaped the Dungeon of Doom!!!!!! \nThank you for playing!");
+        put("WON", "Congratulations!!! \nYou have escaped the Dungeon of Doom!!!!!! \nThank you for playing!");
         put("LOST", "Gosh darn... you've been caught by a bot! Better luck next time :)");
         put("QUIT", "Thank you for playing Dungeon of Doom!!");
         put("SERVER DISCONNECT", "Sorry guys, the server disconnected! Maybe try again later?");
         put("CONNECTION FAILURE", null);
-    }};
+        }
+    };
     private final static HashMap<String, String> PLAYER_EXIT_MESSAGES2 = new HashMap<String, String>() {
         private static final long serialVersionUID = 5882086249082661168L;
-
         {
         put("WON", " has escaped the dungeon!! Maybe you can join them...");
         put("LOST", " has been caught by a bot... Will you have the same fate?");
         put("QUIT", " has quit the game :(");
         put("CONNECTION FAILURE", " has lost connection.");
-    }};
+        }
+    };
 	
 	public GameLogic(DoDServerController controller){
 	    this.controller = controller;
@@ -97,7 +97,7 @@ public class GameLogic{
 		int x = random.nextInt(map.getMapWidth());
 		int y = random.nextInt(map.getMapHeight());
 		
-		if(map.getTile(x, y) == '#' || getPlayerOccupyingTile(x, y) != null){
+		if(map.getTile(x, y) == '#' || isAnotherPlayerOccupyingTile(x, y)){
 			x = random.nextInt(map.getMapWidth());
 			y = random.nextInt(map.getMapHeight());
 			while(map.getTile(x, y) == '#'){
@@ -236,7 +236,7 @@ public class GameLogic{
 		updateServerMap();
 		return "SUCCESS";
     }
-    
+
     // checks to see if another player is in the location a player wants to move to
     private synchronized Player getPlayerOccupyingTile(int newX, int newY){
     	Collection<Player> list = players.values();
@@ -248,6 +248,11 @@ public class GameLogic{
     		}
     	}
     	return null;
+    }
+
+    // checks to see whether there is another player in a location
+    private synchronized boolean isAnotherPlayerOccupyingTile(int newX, int newY) {
+        return getPlayerOccupyingTile(newX, newY) != null;
     }
 
     /**
