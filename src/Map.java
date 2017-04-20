@@ -11,6 +11,8 @@ public class Map {
 	private char[][] map;
 	private String mapName;
 	private int goldToWin;
+	private int mapWidth;
+	private int mapHeight;
 
 	public static final int LOOK_RADIUS = 5;
 
@@ -32,10 +34,9 @@ public class Map {
 				int posY = y + i - LOOK_RADIUS/2;
 				if (posX >= 0 && posX < getMapWidth() && 
 						posY >= 0 && posY < getMapHeight()){
-					reply[j][i] = map[posY][posX];
-				}
-				else{
-					reply[j][i] = '#';
+					reply[i][j] = map[posY][posX];
+				} else {
+					reply[i][j] = '#';
 				}
 			}
 		}
@@ -53,14 +54,14 @@ public class Map {
      * @return	The width of the current map.
      */
     public int getMapWidth() {
-    	return map[0].length;
+    	return mapWidth;
     }
     
     /**
      * @return	The height of the current map.
      */
     public int getMapHeight() {
-    	return map.length;
+    	return mapHeight;
     }
 
 	/**
@@ -135,7 +136,7 @@ public class Map {
     private char[][] loadMap(BufferedReader reader) throws IOException{
 
 		boolean error = false;
-		ArrayList<char[]> tempMap = new ArrayList<char[]>();
+		ArrayList<char[]> tempMap = new ArrayList<>();
 		int width = -1;
 		
 		String in = reader.readLine();
@@ -182,6 +183,8 @@ public class Map {
             }
 			map[i] = mapRow;
 		}
+		mapHeight = map.length;
+        mapWidth = map[0].length;
 		return map;
 	}
     

@@ -289,7 +289,7 @@ public class GameLogic{
     	String lookWindow = "";
     	for(int i=0; i<look.length; i++){
     		for(int j=0; j<look[i].length; j++){
-    			sb.append(look[j][i]);
+    			sb.append(look[i][j]);
     		}
     		if (i + 1 != look.length)
     		    sb.append('\n');
