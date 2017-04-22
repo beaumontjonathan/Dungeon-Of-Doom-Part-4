@@ -28,15 +28,15 @@ public class Map {
      */
     protected char[][] look(int x, int y) {
     	char[][] reply = new char[LOOK_RADIUS][LOOK_RADIUS];
-		for (int i = 0; i < LOOK_RADIUS; i++) {
-			for (int j = 0; j < LOOK_RADIUS; j++) {
-				int posX = x + j - LOOK_RADIUS/2;
-				int posY = y + i - LOOK_RADIUS/2;
+		for (int yIncrement = 0; yIncrement < LOOK_RADIUS; yIncrement++) {
+			for (int xIncrement = 0; xIncrement < LOOK_RADIUS; xIncrement++) {
+				int posX = x + xIncrement - LOOK_RADIUS/2;
+				int posY = yIncrement + yIncrement - LOOK_RADIUS/2;
 				if (posX >= 0 && posX < getMapWidth() && 
 						posY >= 0 && posY < getMapHeight()){
-					reply[i][j] = map[posY][posX];
+					reply[yIncrement][xIncrement] = map[posY][posX];
 				} else {
-					reply[i][j] = '#';
+					reply[yIncrement][xIncrement] = '#';
 				}
 			}
 		}
