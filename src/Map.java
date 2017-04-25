@@ -1,4 +1,8 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,32 +15,31 @@ public class Map {
 	private char[][] map;
 	private String mapName;
 	private int goldToWin;
-	private int mapWidth;
-	private int mapHeight;
-
-	public static final int LOOK_RADIUS = 5;
+	
+	private static final int LOOK_RADIUS = 5;
 
     /**
-     * @return	Gold required to exit the current map.
+     * @return : Gold required to exit the current map.
      */
     protected int getGoldToWin() {
         return goldToWin;
     }
 
     /**
-     * @return	The look window around a players coordinates
+     * @return : The look window around a players coordinates
      */
     protected char[][] look(int x, int y) {
     	char[][] reply = new char[LOOK_RADIUS][LOOK_RADIUS];
-		for (int yIncrement = 0; yIncrement < LOOK_RADIUS; yIncrement++) {
-			for (int xIncrement = 0; xIncrement < LOOK_RADIUS; xIncrement++) {
-				int posX = x + xIncrement - LOOK_RADIUS/2;
-				int posY = yIncrement + yIncrement - LOOK_RADIUS/2;
+		for (int i = 0; i < LOOK_RADIUS; i++) {
+			for (int j = 0; j < LOOK_RADIUS; j++) {
+				int posX = x + j - LOOK_RADIUS/2;
+				int posY = y + i - LOOK_RADIUS/2;
 				if (posX >= 0 && posX < getMapWidth() && 
 						posY >= 0 && posY < getMapHeight()){
-					reply[yIncrement][xIncrement] = map[posY][posX];
-				} else {
-					reply[yIncrement][xIncrement] = '#';
+					reply[j][i] = map[posY][posX];
+				}
+				else{
+					reply[j][i] = '#';
 				}
 			}
 		}
@@ -44,45 +47,32 @@ public class Map {
     }
 
     /**
-     * @return	The name of the current map.
+     * @return : The name of the current map.
      */
     public String getMapName() {
         return mapName;
     }
 
     /**
-     * @return	The width of the current map.
+     * @return : The width of the current map.
      */
     public int getMapWidth() {
-    	return mapWidth;
+    	return map[0].length;
     }
     
     /**
-     * @return	The height of the current map.
+     * @return : The height of the current map.
      */
     public int getMapHeight() {
-    	return mapHeight;
+    	return map.length;
     }
-
-	/**
-	 * @return	a copy of the map
-	 */
-	public char[][] getMap() {
-		char[][] returnMap = new char[getMapHeight()][getMapWidth()];
-		for (int i=0;i<getMapHeight();i++){
-			for (int j = 0; j < getMapWidth(); j++) {
-				returnMap[i][j] = map[i][j];
-			}
-		}
-		return returnMap;
-	}
-
+    
     /**
      * Retrieves a tile on the map. If the location requested is outside bounds of the map, it returns 'X' wall.
      *
-     * @param x x coordinates of the tile.
-     * @param y y coordinates of the tile.
-     * @return	What the tile at the location requested contains.
+     * @param x : x coordinates of the tile.
+     * @param y : y coordinates of the tile.
+     * @return : What the tile at the location requested contains.
      */
     public char getTile(int x, int y) {
     	if (y < 0 || x < 0 || y >= map.length || x >= map[0].length){
@@ -94,9 +84,9 @@ public class Map {
     /**
      * Replaces a tile on the map if the location requested is outside bounds of the map.
      *
-     * @param x x coordinates of the tile.
-     * @param y y coordinates of the tile.
-     * @return	What the tile at the location requested contains.
+     * @param x : x coordinates of the tile.
+     * @param y : y coordinates of the tile.
+     * @return : What the tile at the location requested contains.
      */
     public void replaceTile(int x, int y, char with) {
     	if (y < 0 || x < 0 || y >= map.length || x >= map[0].length){
@@ -110,7 +100,7 @@ public class Map {
     /**
      * Reads the map from file.
      *
-     * @param fileName Name of the map's file.
+     * @param : Name of the map's file.
      */
     public void readMap(String fileName) {
     	try {
@@ -130,13 +120,13 @@ public class Map {
     /**
      * Reads the map from file.
      *
-     * @param reader	BufferedReader for the map file.
-     * @return			The map as a 2D char array
+     * @param : BufferedReader for the map file.
+     * @return : The map as a 2D char array 
      */
     private char[][] loadMap(BufferedReader reader) throws IOException{
-
+		
 		boolean error = false;
-		ArrayList<char[]> tempMap = new ArrayList<>();
+		ArrayList<char[]> tempMap = new ArrayList<char[]>();
 		int width = -1;
 		
 		String in = reader.readLine();
@@ -178,13 +168,8 @@ public class Map {
 		char[][] map = new char[tempMap.size()][width];
 		
 		for (int i=0;i<tempMap.size();i++){
-		    char[] mapRow = tempMap.get(i);
-		    for (int j = 0; j < mapRow.length; j++) {
-            }
-			map[i] = mapRow;
+			map[i] = tempMap.get(i);
 		}
-		mapHeight = map.length;
-        mapWidth = map[0].length;
 		return map;
 	}
     
@@ -192,8 +177,8 @@ public class Map {
      * Sets the win condition for the game 
      * checking to make sure the line from the map file is valid 
      *
-     * @param in	line of the map file which contains the win condition
-     * @return 		boolean value indicating if there was an error
+     * @param : line of the map file which contains the win condition
+     * @return : boolean value indicating if there was an error 
      */
     private boolean setWin(String in) {
 		if (!in.startsWith("win ")){
@@ -220,8 +205,8 @@ public class Map {
      * Sets the name of the maps 
      * checking to make sure the line from the map file is valid 
      *
-     * @param	in	line of the map file which contains the name of the map
-     * @return		boolean value indicating if there was an error
+     * @param : line of the map file which contains the name of the map
+     * @return : boolean value indicating if there was an error 
      */
 	private boolean setName(String in) {
 		if (!in.startsWith("name ") && in.length() < 4){
@@ -237,5 +222,6 @@ public class Map {
 		this.mapName = name;
 		return false;
 	}
+
 }
 	
