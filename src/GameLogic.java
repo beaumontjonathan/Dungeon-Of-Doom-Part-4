@@ -180,9 +180,9 @@ public class GameLogic{
     	char[][] look = getVisibleOpponents(l, player);
     	// return look window as a String for printing
     	String lookWindow = "";
-    	for(int i=0; i<look.length; i++){
-    		for(int j=0; j<look[i].length; j++){
-    			lookWindow += look[j][i];
+    	for(int yIncrement = 0; yIncrement<look.length; yIncrement++){
+    		for(int xIncrement = 0; xIncrement<look[yIncrement].length; xIncrement++){
+    			lookWindow += look[yIncrement][xIncrement];
     		}
     		lookWindow += "\n";
     	}
