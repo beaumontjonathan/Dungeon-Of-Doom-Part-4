@@ -15,6 +15,9 @@ public class GameLogicJNI{
     private Random random;
     private boolean active;
 
+    static {
+        System.loadLibrary ( "gameLogic" );
+    }
 
     public GameLogicJNI(){
         map = new Map();
