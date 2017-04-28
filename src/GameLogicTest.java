@@ -1,5 +1,9 @@
 import org.junit.Test;
 
+import java.lang.reflect.Field;
+
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * Contains unit tests for <code>GameLogic</code>.
  *
@@ -22,8 +26,24 @@ public class GameLogicTest {
     }
 
     @Test
-    public void gameRunning() {
+    public void gameRunning() throws NoSuchFieldException, IllegalAccessException {
+        //set game
+        final GameLogicJNI game = new GameLogicJNI();
 
+        //get active field
+        final Field activeField = game.getClass().getDeclaredField("active");
+
+        //test data
+        boolean testData = false;
+
+        //set active field accessible and give it the test value
+        activeField.setAccessible(true);
+        activeField.set(game, testData);
+
+        //get result of method
+        boolean result = game.gameRunning();
+
+        assertEquals("Field wasn't retrieved properly", testData, result);
     }
 
     @Test

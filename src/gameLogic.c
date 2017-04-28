@@ -7,7 +7,18 @@ JNIEXPORT jintArray JNICALL Java_GameLogicJNI_getSpawnLocation(JNIEnv *, jobject
 
 JNIEXPORT jstring JNICALL Java_GameLogicJNI_processCommand(JNIEnv *, jobject, jstring, jint);
 
-JNIEXPORT jboolean JNICALL Java_GameLogicJNI_gameRunning(JNIEnv *, jobject);
+JNIEXPORT jboolean JNICALL Java_GameLogicJNI_gameRunning(JNIEnv *env, jobject thisObj) {
+	//get map class
+	jclass thisClass = (*env)->GetObjectClass(env, thisObj);
+	
+	//get map field
+	jfieldID activeFieldID = (*env)->GetFieldID(env, thisClass, "active", "Z");
+	
+	//get map object
+	jboolean activeValue = (*env)->GetBooleanField(env, thisObj, activeFieldID);
+	
+	return activeValue;
+}
 
 JNIEXPORT jstring JNICALL Java_GameLogicJNI_hello(JNIEnv *, jobject, jobject);
 
