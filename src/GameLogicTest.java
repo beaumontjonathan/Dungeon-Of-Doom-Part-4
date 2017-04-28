@@ -7,7 +7,7 @@ import org.junit.Test;
  */
 public class GameLogicTest {
     @Test
-    public void addPlayer() {
+    public void addDoDPlayer() {
 
     }
 
@@ -22,6 +22,16 @@ public class GameLogicTest {
     }
 
     @Test
+    public void gameRunning() {
+
+    }
+
+    @Test
+    public void hello() {
+
+    }
+
+    @Test
     public void move() {
 
     }
@@ -32,7 +42,27 @@ public class GameLogicTest {
     }
 
     @Test
+    public void look() {
+
+    }
+
+    @Test
+    public void getVisibleOpponents() {
+
+    }
+
+    @Test
     public void pickup() {
+
+    }
+
+    @Test
+    public void checkWin() {
+
+    }
+
+    @Test
+    public void quitGame() {
 
     }
 }
