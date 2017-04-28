@@ -38,7 +38,7 @@ public class GameLogic{
 		if(map.getTile(x, y) == '#'){
 			x = random.nextInt(map.getMapWidth());
 			y = random.nextInt(map.getMapHeight());
-			while(map.getTile(x, y) == '#'){
+			while(map.getTile(x, y) == '#' || isAnotherPlayerOccupyingTile(x, y)){
 				x = random.nextInt(map.getMapWidth());
 				y = random.nextInt(map.getMapHeight());
 			}
